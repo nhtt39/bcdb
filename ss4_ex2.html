@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 2 - Git Merge Conflict</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #24292f;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #d0d7de;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 30px auto;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h2 {
+            color: #24292f;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin-top: 15px;
+            margin-bottom: 8px;
+        }
+
+        ul {
+            margin-left: 25px;
+        }
+
+        code {
+            background: #f0f2f4;
+            padding: 3px 6px;
+            border-radius: 4px;
+            color: #d6336c;
+        }
+
+        pre {
+            background: #1f2328;
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .conflict {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .success {
+            background: #d1e7dd;
+            border-left: 5px solid #198754;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #24292f;
+            color: white;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Bài 2: Git Merge Conflict</h1>
+    <p>Thực hành tạo và xử lý xung đột khi gộp nhánh</p>
+</header>
+
+<div class="container">
+
+    <div class="card">
+        <h2>🎯 Mục tiêu</h2>
+
+        <ul>
+            <li>Tạo mới và di chuyển giữa các nhánh Git.</li>
+            <li>Tạo ra Merge Conflict một cách có chủ đích.</li>
+            <li>Xử lý xung đột thủ công trong file.</li>
+            <li>Thực hiện Merge Commit.</li>
+            <li>Hiểu cơ chế gộp 3-Way Merge.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>🌿 Quy trình thực hiện</h2>
+
+        <h3>1. Tạo branch feature-update</h3>
+
+        <pre>
+git switch main
+git pull origin main
+
+git switch -c feature-update
+        </pre>
+
+        <h3>2. Cập nhật README trên feature-update</h3>
+
+        <pre>
+git add README.md
+git commit -m "feat: update README on feature branch"
+        </pre>
+
+        <h3>3. Quay lại main</h3>
+
+        <pre>
+git switch main
+        </pre>
+
+        <h3>4. Tạo thay đổi trên main</h3>
+
+        <pre>
+git add README.md
+git commit -m "docs: update README on main"
+        </pre>
+
+        <h3>5. Merge feature-update</h3>
+
+        <pre>
+git merge feature-update
+        </pre>
+    </div>
+
+    <div class="card">
+
+        <h2>⚠️ Merge Conflict</h2>
+
+        <p>
+            Khi hai branch cùng thay đổi một dòng trong
+            <code>README.md</code>, Git có thể không tự quyết định
+            phiên bản nào được giữ lại.
+        </p>
+
+        <div class="conflict">
+
+            <strong>Git sẽ đánh dấu vùng xung đột:</strong>
+
+            <pre>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Đây là nội dung được thay đổi trên main.
+=======
+Đây là nội dung được thay đổi trên feature-update.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature-update
+            </pre>
+
+        </div>
+
+    </div>
+
+        <h2>🛠️ Xử lý Conflict</h2>
+
+            Người lập trình cần mở file
+        </p>
+
+            Sau khi sửa, phải xóa toàn bộ các ký hiệu:
+
+        <pre>
+=======
+        </pre>
+
+        <p>
+        </p>
+
+        <pre>
+git add README.md
+git commit -m "merge: resolve conflict between main and feature-update"
+        </pre>
+        <div class="success">
+            <strong>✓ Merge Conflict đã được xử lý thành công!</strong>
+        </div>
+
+    </div>
+
+    <div class="card">
+        <h2>📊 Kiểm tra lịch sử Git</h2>
+
+
+        <pre>
+git log --graph --oneline --all
+        </pre>
+
+        <p>
+            <code>feature-update</code> được tách ra từ
+            <code>main</code> và sau đó được gộp trở lại bằng
+            một Merge Commit.
+        </p>
+
+        <pre>
+*   abc1234 merge: resolve conflict
+| * def5678 feat: update README on feature branch
+* | ghi9012 docs: update README on main
+|/
+* jkl3456 initial commit
+        </pre>
+
+    </div>
+
+    <div class="card">
+
+        <h2>🔀 3-Way Merge</h2>
+
+        <p>
+            Merge Commit có hai commit cha:
+        </p>
+
+        <ul>
+            <li>Commit cuối của branch <strong>main</strong>.</li>
+            <li>Commit cuối của branch <strong>feature-update</strong>.</li>
+        </ul>
+
+        <p>
+            Git sử dụng commit chung ban đầu làm cơ sở để so sánh
+            thay đổi của hai branch và xác định vùng xung đột.
+        </p>
+
+        <pre>
+             feature-update
+                    |
+                    v
+             Feature Commit
+                  /     \
+                 /       \
+        Initial Commit   Merge Commit
+                 \       /
+                  \     /
+                 Main Commit
+                    |
+                   main
+        </pre>
+
+    </div>
+
+</div>
+
+<footer>
+    <p>Bài 2 - Git Branch & Merge Conflict</p>
+    <p>Thực hành Git cơ bản</p>
+</footer>
+
+</body>
+</html>|\
+            Kết quả mong đợi sẽ thể hiện branch
+        <p>Chạy lệnh:</p>
+
+
+
+            Sau đó lưu file và chạy:
+
+        </p>
+        <p>
+            <code>README.md</code> và lựa chọn nội dung phù hợp.
+        <p>
+
