@@ -6,3 +6,6 @@
 - Tạo branch
 - Cập nhật code
 - Xử lý merge conflict
+
+## Main Update
+Main đã được cập nhật nội dung mới.
