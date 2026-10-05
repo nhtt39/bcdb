@@ -6,3 +6,6 @@
 - Tạo branch
 - Cập nhật code
 - Xử lý merge conflict
+
+## Feature Update
+Đã bổ sung tính năng mới trên nhánh feature-update.	
