@@ -9,3 +9,7 @@
 
 ## Main Update
 Main đã được cập nhật nội dung mới.
+
+## Feature Update
+Đã bổ sung tính năng mới trên nhánh feature-update.	
+
